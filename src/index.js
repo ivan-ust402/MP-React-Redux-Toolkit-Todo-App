@@ -4,6 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios'
+
+axios('http://localhost:4000/todos').then((response) => {
+  console.log(
+    '1'
+  )
+ console.log(response.data)
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
