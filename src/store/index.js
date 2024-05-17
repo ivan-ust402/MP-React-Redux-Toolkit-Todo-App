@@ -186,3 +186,49 @@ export const {
   clearCompletedTodos
 } = todoSlice.actions
 
+// Определяем начальное состояние, часть состояния для фильтра и экспортируем операцию для работы с ним
+const initialFilterState = {
+  status: 'all'
+}
+
+// Часть состояния для фильтра
+const filterSlice = createSlice({
+  // Наименование
+  name: 'filter',
+  // Начальное состояние
+  initialState: initialFilterState,
+  // Обычные редьюсеры
+  reducers: {
+    // Для установки фильтра 
+    setFilter(state, action) {
+      state.status = action.payload
+    }
+  }
+})
+
+// Экспортируем операцию для установки фильтра
+export const { setFilter } = filterSlice.actions
+
+// Создаем и экспортируем селекторы
+// Встроенные селекторы для выборки всех задач и общего количества задач
+export const { selectAll, selectTotal } = todoAdapter.getSelectors(
+  (state) => state.todos
+)
+
+// Кастомный селектор для выборки задач на основе текущего состояния фильтра
+export const selectFilteredTodos = createSelector(
+  // встроенный селектор
+  selectAll,
+  // Селектор для выборки значения фильтра
+  (state) => state.filter,
+  // Функция для вычичления конечного результата
+  (todos, filter) => {
+    const { status } = filter
+    // Значением фильтра может быть "all", "active" или "completed"
+    // в принципе, возможные значения фильтра можно определить в виде констант
+    if (status === 'all') return todos
+    return status === 'active'
+      ? todos.filter((todo) => !todo.done) 
+      : todos.filter((todo) => todo.done)
+  }
+)
