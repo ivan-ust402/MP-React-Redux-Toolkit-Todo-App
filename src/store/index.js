@@ -75,8 +75,8 @@ export const saveTodos = createAsyncThunk(
             await axios.put(todoURL, commonTodo)
           }
         } else {
-            // Если общая задача отсутствует, удаляем задачу на сервере
-            await axios.delete(todoURL)
+          // Если общая задача отсутствует, удаляем задачу на сервере
+          await axios.delete(todoURL)
         }
       }
 
@@ -88,31 +88,91 @@ export const saveTodos = createAsyncThunk(
         }
       }
       // Возвращаем сообщение об успехе
-      return { type: 'success', text: 'Todos has been saved' }
+      return { type: "success", text: "Todos has been saved" }
     } catch (error) {
       console.error(error.toJSON())
       // Возвращаем сообщение об ошибке
       return {
-        type: 'error',
-        text: 'Something went wrong. Try again later'
+        type: "error",
+        text: "Something went wrong. Try again later",
       }
     }
   }
 )
 
 // Создание и экспорт преобразователя для задержки в 2 секунды
-
-export const giveMeSomeTime = createAsyncThunk(
-  '',
-  async () => {
-    await new Promise((resolve) => {
-      const timerId = setTimeout(() => {
-        resolve()
-        clearTimeout(timerId)
-      }, 2000)
-    })
-  }
-)
+export const giveMeSomeTime = createAsyncThunk("", async () => {
+  await new Promise((resolve) => {
+    const timerId = setTimeout(() => {
+      resolve()
+      clearTimeout(timerId)
+    }, 2000)
+  })
+})
 
 // Создание части состояния для задач
+const todoSlice = createSlice({
+  name: "todos",
+  // Начальное состояние в виде нормализованной структуры
+  initialState: initialTodoState,
+  // Обычные редьюсеры
+  reducers: {
+    // Для добавления задачи
+    addTodo: todoAdapter.addOne,
+    // Для обновления задачи
+    updateTodo: todoAdapter.updateOne,
+    // Для удаления задачи
+    removeTodo: todoAdapter.removeOne,
+    // Для завершения всех активных задач
+    completeAllTodos(state) {
+      Object.values(state.entities).forEach((todo) => (todo.done = "true"))
+    },
+    // Для удаления всех завершенных задач
+    clearCompletedTodos(state) {
+      const completedTodosIds = Object.values(state.entities)
+        .filter((todo) => todo.done)
+        .map((todo) => todo.id)
+      todoAdapter.removeMany(state, completedTodosIds)
+    },
+  },
+  // Дополнительные редьюсеры для обработки результатов асинхронных операций
+  extraReducers: (builder) => {
+    builder
+      //  Запрос на получение задач от сервера находится в процессе выполнения
+      .addCase(fetchTodo.pending, (state) => {
+        // Обновляем индикатор загрузки
+        state.status = "loading"
+      })
+      // Запрос выполнен
+      .addCase(fetchTodo.fulfilled, (state, { payload }) => {
+        if (payload.todos) {
+          // Обновление состояние задач
+          todoAdapter.setAll(state, payload.todos)
+          // Записываем сообщение
+          state.message = payload.message
+          // Обновляем индикатор загрузки
+          state.status = "idle"
+        }
+      })
 
+      // Запрос на сохранение задач в БД находится в процессе выполнения
+      .addCase(saveTodos.pending, (state) => {
+        // Обновляем индикатор загрузки
+        state.status = "loading"
+      })
+      // Запрос выполнен
+      .addCase(saveTodos.fulfilled, (state, { payload }) => {
+        // Записываем сообщение 
+        state.message = payload.message
+        // Обновляем индикатор загрузки
+        state.status = 'idle'
+      })
+
+      // Запрос на задержку в 2 секунды выполнен
+      .addCase(giveMeSomeTime.fulfilled, (state) => {
+        // Очищаем сообщение
+        state.message = {}
+      })
+
+  },
+})
