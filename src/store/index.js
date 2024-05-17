@@ -232,3 +232,34 @@ export const selectFilteredTodos = createSelector(
       : todos.filter((todo) => todo.done)
   }
 )
+
+// Селектор для выборки статистики
+export const selectTodoStats = createSelector(
+  // встроенный селектор
+  selectAll,
+  // встроенный селектор
+  selectTotal,
+  // Функция для вычисления конечного результата
+  (todos, total) => {
+    // Нас интересует общее количество, количество активных и количество
+    // завершенных задач, а также процент активных задач
+    const completed = todos.filter(( todo ) => todo.done).length
+    const active = total - completed
+    const percent = total === 0 ? 0 : Math.round((active / total) * 100)
+
+    return {
+      total, 
+      completed,
+      active,
+      percent
+    }
+  }
+)
+
+// Создаем и экспортируем хранилище
+export const store = configureStore({
+  reducer: {
+    todos: todoSlice.reducer,
+    filter: filterSlice.reducer
+  }
+}) 
