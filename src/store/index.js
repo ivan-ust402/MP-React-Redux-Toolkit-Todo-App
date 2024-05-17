@@ -176,3 +176,13 @@ const todoSlice = createSlice({
 
   },
 })
+
+// Экспортируем операции для работы с задачами
+export const {
+  addTodo,
+  updateTodo,
+  removeTodo,
+  completeAllTodos,
+  clearCompletedTodos
+} = todoSlice.actions
+
