@@ -12,6 +12,7 @@
     "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
     "json-server": "^1.0.0-beta.0",
+    "nanoid": "^5.0.7",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
