@@ -22,7 +22,7 @@ const initialTodoState = todoAdapter.getInitialState({
 })
 
 // Создаем и экспортируем преобразователь для получения задач от сервера
-export const fetchTodo = createAsyncThunk("todos/fetchTodos", async () => {
+export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   try {
     // Получаем данные
     const { data: todos } = await axios(SERVER_URL)
@@ -139,12 +139,12 @@ const todoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //  Запрос на получение задач от сервера находится в процессе выполнения
-      .addCase(fetchTodo.pending, (state) => {
+      .addCase(fetchTodos.pending, (state) => {
         // Обновляем индикатор загрузки
         state.status = "loading"
       })
       // Запрос выполнен
-      .addCase(fetchTodo.fulfilled, (state, { payload }) => {
+      .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         if (payload.todos) {
           // Обновление состояние задач
           todoAdapter.setAll(state, payload.todos)

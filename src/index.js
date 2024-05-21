@@ -1,26 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios'
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import App from "./App"
+import reportWebVitals from "./reportWebVitals"
+import "bootstrap/dist/css/bootstrap.min.css"
+import { Provider } from "react-redux"
+import { store, fetchTodos, giveMeSomeTime } from "./store"
 
-axios('http://localhost:4000/todos').then((response) => {
-  console.log(
-    '1'
-  )
- console.log(response.data)
-})
+// Отправляем в редуктор операцию для получения задач
+// и следом за ней операцию для очистки сообщения с задержкой в 2 секунды
+store.dispatch(fetchTodos()).then(() => store.dispatch(giveMeSomeTime()))
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()
