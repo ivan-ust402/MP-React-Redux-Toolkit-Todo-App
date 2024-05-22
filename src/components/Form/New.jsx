@@ -7,25 +7,27 @@ import { addTodo } from "../../store"
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Локальное состояние для текста новой задачи
-  const [text, setText] = useState()
+  const [text, setText] = useState('')
 
   // Функция для изменения тескта задачи
   const changeText = ({ target: { value } }) => {
     // Форматируем строку, встречающися пробелы отличные от одинарного приводим
     // к одинарным и убираем пробелы с начала и с конца строки
-    const trimmed = value.replace(/\s{2,}/g, " ").trim()
-    setText(trimmed)
+    // const trimmed = value.replace(/\s{2,}/g, ' ').trim()
+    setText(value)
   }
 
   // Функия для добавления задачи
   const onAddTodo = (e) => {
     e.preventDefault()
-
+    
     if (!text) return
+
+    const trimmed = text.replace(/\s{2,}/g, ' ').trim()
 
     const newTodo = {
       id: nanoid(5),
-      text,
+      text: trimmed,
       done: false,
       edit: false,
     }

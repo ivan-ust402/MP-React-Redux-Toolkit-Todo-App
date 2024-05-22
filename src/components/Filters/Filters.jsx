@@ -17,7 +17,7 @@ export const Filters = () => {
             id={filter}
             type="radio"
             checked={filter === status}
-            onChange={() => dispatch(setFilter)}
+            onChange={() => dispatch(setFilter(filter))}
             className='form-check-input'
           />
           <label htmlFor={filter} className='form-check-label'>

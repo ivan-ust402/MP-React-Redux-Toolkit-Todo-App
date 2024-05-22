@@ -1,1 +1,1 @@
-export { Regular } from './Regular.jsx'
+export * from './Regular.jsx'

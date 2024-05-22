@@ -18,7 +18,7 @@ export const Stats = () => {
           <tr>
             {Object.keys(stats).map(([first, ...rest], index) => (
               <th scope="col" key={index}>
-                {`${first.toUpperCase()}${rest.join(',').toLowerCase()}`}
+                {`${first.toUpperCase()}${rest.join('').toLowerCase()}`}
               </th>
             ))}
           </tr>

@@ -10,6 +10,12 @@ import axios from "axios"
 
 const SERVER_URL = "http://localhost:4000/todos"
 
+// Функция для имитации задержки в две секунды
+const simulateDelay = async (fn) => {
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  return fn();
+}
+
 // Создаем адаптер сущностей для задач
 const todoAdapter = createEntityAdapter()
 
@@ -25,7 +31,7 @@ const initialTodoState = todoAdapter.getInitialState({
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   try {
     // Получаем данные
-    const { data: todos } = await axios(SERVER_URL)
+    const { data: todos } = await simulateDelay(() => axios(SERVER_URL))
     // Возвращаем задачи и сообщение об успехе операции
     return {
       todos,
@@ -52,7 +58,7 @@ export const saveTodos = createAsyncThunk(
   async (newTodos) => {
     try {
       // Получаем данные - существующие задачи
-      const { data: existingTodos } = await axios(SERVER_URL)
+      const { data: existingTodos } = await simulateDelay(() => axios(SERVER_URL))
 
       // Перебираем существующие задачи
       for (const todo of existingTodos) {
@@ -72,11 +78,11 @@ export const saveTodos = createAsyncThunk(
           ) {
             // Если изменения есть, обновляем задачу на сервере,
             // в противном случае ничего не делаем
-            await axios.put(todoURL, commonTodo)
+            await simulateDelay(() => axios.put(todoURL, commonTodo))
           }
         } else {
           // Если общая задача отсутствует, удаляем задачу на сервере
-          await axios.delete(todoURL)
+          await simulateDelay(() => axios.delete(todoURL))
         }
       }
 
@@ -84,7 +90,7 @@ export const saveTodos = createAsyncThunk(
       for (const todo of newTodos) {
         if (!existingTodos.find((_todo) => _todo.id === todo.id)) {
           // Сохраняем ее на сервере
-          await axios.post(SERVER_URL, todo)
+          await simulateDelay(() => axios.post(SERVER_URL, todo))
         }
       }
       // Возвращаем сообщение об успехе
@@ -125,7 +131,7 @@ const todoSlice = createSlice({
     removeTodo: todoAdapter.removeOne,
     // Для завершения всех активных задач
     completeAllTodos(state) {
-      Object.values(state.entities).forEach((todo) => (todo.done = "true"))
+      Object.values(state.entities).forEach((todo) => (todo.done = true))
     },
     // Для удаления всех завершенных задач
     clearCompletedTodos(state) {
@@ -163,7 +169,7 @@ const todoSlice = createSlice({
       // Запрос выполнен
       .addCase(saveTodos.fulfilled, (state, { payload }) => {
         // Записываем сообщение 
-        state.message = payload.message
+        state.message = payload
         // Обновляем индикатор загрузки
         state.status = 'idle'
       })

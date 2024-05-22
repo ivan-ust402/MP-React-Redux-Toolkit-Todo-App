@@ -2,14 +2,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { removeTodo, updateTodo } from '../../../store';
 
-const Regular = ({ todo }) => {
+export const Regular = ({ todo }) => {
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Получаем все свойства задачи
   const {id, text, done, edit} = todo
 
   return (
-    <li className='list-group-item d-flex align-items-center'>
+    <li className='list-group-item d-flex g-1 align-items-center'>
       <input 
         className='form-check-input'
         type="checkbox" 
@@ -17,7 +17,7 @@ const Regular = ({ todo }) => {
         onChange={() => dispatch(updateTodo({ id, changes: { done: !done } }))}
       />
       <p
-        className={`flex-grow-1 m-0 ${
+        className={`flex-grow-1 m-0 text-start ${
           done ? 'text-muted text-decortion-line-through' : ''
         }`}
       >
@@ -40,4 +40,3 @@ const Regular = ({ todo }) => {
   );
 }
 
-export default Regular;

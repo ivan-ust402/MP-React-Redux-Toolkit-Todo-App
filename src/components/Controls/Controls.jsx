@@ -12,7 +12,7 @@ import {
   saveTodos,
   giveMeSomeTime,
   selectAll,
-} from "../store"
+} from "../../store"
 
 export const Controls = () => {
   // Получаем диспетчер
@@ -32,13 +32,13 @@ export const Controls = () => {
       {todos.length ? (
         <>
           <button
-            onClick={() => dispatch(completeAllTodos)}
+            onClick={() => dispatch(completeAllTodos())}
             className="btn btn-info mb-2"
           >
             Complete
           </button>
           <button
-            onClick={() => dispatch(clearCompletedTodos)}
+            onClick={() => dispatch(clearCompletedTodos())}
             className="btn btn-danger mb-2"
           >
             Clear
