@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../store';
 
-const Filters = () => {
+export const Filters = () => {
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Получаем текущее значение фильтра
@@ -29,4 +29,3 @@ const Filters = () => {
   );
 }
 
-export default Filters;

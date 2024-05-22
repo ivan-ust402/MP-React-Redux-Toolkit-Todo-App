@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeTodo, updateTodo } from '../../store';
+import { removeTodo, updateTodo } from '../../../store';
 
 const Regular = ({ todo }) => {
   // Получаем диспетчер

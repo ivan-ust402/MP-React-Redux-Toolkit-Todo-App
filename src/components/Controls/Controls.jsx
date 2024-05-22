@@ -14,7 +14,7 @@ import {
   selectAll,
 } from "../store"
 
-const Controls = () => {
+export const Controls = () => {
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Получаем список всех задач
@@ -57,4 +57,4 @@ const Controls = () => {
   )
 }
 
-export default Controls
+

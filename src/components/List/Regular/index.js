@@ -1,0 +1,1 @@
+export { Regular } from './Regular.jsx'

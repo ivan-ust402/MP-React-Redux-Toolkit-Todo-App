@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addTodo } from "../../store"
 
-const New = () => {
+ export const New = () => {
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Локальное состояние для текста новой задачи
@@ -52,4 +52,3 @@ const New = () => {
   )
 }
 
-export default New

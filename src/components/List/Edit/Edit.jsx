@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { removeTodo, updateTodo } from "../../store"
+import { removeTodo, updateTodo } from "../../../store"
 
-const Edit = ({ todo }) => {
+export const Edit = ({ todo }) => {
   // Получаем диспетчер
   const dispatch = useDispatch()
   // Извлекаем все свойства задачи, кроме индикатора завершенности
@@ -81,4 +81,3 @@ const Edit = ({ todo }) => {
   )
 }
 
-export default Edit
