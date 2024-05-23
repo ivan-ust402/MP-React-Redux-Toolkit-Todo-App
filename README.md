@@ -6,5 +6,6 @@ This is a simple application with which we can download a list of to-do items fr
 - Axios
 - Json Server
 - Concurrently
-
+### Visual display of the developed application
+!["Todo application"](./src/assets/project_discription/todo-description.png)
 
