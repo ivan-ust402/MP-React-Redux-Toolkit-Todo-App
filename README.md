@@ -1,5 +1,7 @@
 # Todo Application
-This is a simple application with which we can download a list of to-do items from a fake database. In this application we can delete existing items, edit them, create and add new ones. To save changes to the to-do list and send the updated list to the database a button has been added and the necessary functionality has been implemented. Also in the application, in addition to filters, you can delete all completed to-do list items at once, as well as mark all to-do list items as completed. This application displays simple statistics on items from the to-do list. The application also includes functionality for filtering the to-do list.
+This application is designed to facilitate task management by allowing users to download a list of to-do items from a simulated database. Users can perform various actions such as deleting, editing, creating, and adding new items within the application. To save changes made to the to-do list and update the database, a dedicated button has been incorporated along with the necessary functionality.
+
+Furthermore, the application offers additional features including the ability to delete all completed to-do items simultaneously, as well as mark all items as completed. Users can also access simple statistics related to the to-do list items. Additionally, the application provides filtering functionality to streamline task organization.
 ## Technologies used:
 - React
 - React-redux
